@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import plotly.graph_objects as go
+import plotly.figure_factory as ff
 import numpy as np
 from numpy import sin, cos, tan, sqrt, exp, log, log10, arcsin, arccos, arctan, sinh, cosh, tanh, abs, pi, e
 import sys
@@ -45,7 +46,7 @@ def plot_vector_field_2d(u_expr, v_expr, bounds=(-3, 3), points=20):
     x = np.linspace(bounds[0], bounds[1], points)
     y = np.linspace(bounds[0], bounds[1], points)
     X, Y = np.meshgrid(x, y)
-    
+
     namespace = {"np": np, "x": X, "y": Y,
                  "sin": sin, "cos": cos, "tan": tan, "sqrt": sqrt,
                  "exp": exp, "log": log, "log10": log10,
@@ -54,25 +55,17 @@ def plot_vector_field_2d(u_expr, v_expr, bounds=(-3, 3), points=20):
                  "abs": abs, "pi": pi, "e": e}
     U = eval(u_expr, namespace)
     V = eval(v_expr, namespace)
-    
-    # Plotly for 2D - using scatter with arrows
-    fig = go.Figure()
-    
-    # Create arrow annotations
-    for i in range(0, len(x), max(1, len(x)//15)):  # subsample for clarity
-        for j in range(0, len(y), max(1, len(y)//15)):
-            fig.add_annotation(
-                x=X[j,i], y=Y[j,i],
-                ax=X[j,i] + U[j,i]*0.3, ay=Y[j,i] + V[j,i]*0.3,
-                xref='x', yref='y',
-                axref='x', ayref='y',
-                showarrow=True,
-                arrowhead=2,
-                arrowsize=1,
-                arrowwidth=2,
-                arrowcolor='blue'
-            )
-    
+
+    # Use quiver plot for proper vector field visualization
+    fig = ff.create_quiver(
+        X.flatten(), Y.flatten(),
+        U.flatten(), V.flatten(),
+        scale=0.1,
+        arrow_scale=0.3,
+        name='vectors',
+        line_width=2
+    )
+
     fig.update_layout(
         xaxis_title='x',
         yaxis_title='y',
@@ -80,7 +73,7 @@ def plot_vector_field_2d(u_expr, v_expr, bounds=(-3, 3), points=20):
         height=800,
         xaxis=dict(scaleanchor="y", scaleratio=1)
     )
-    
+
     fig.show()
 
 if __name__ == "__main__":
