@@ -1,0 +1,17 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vectorfield"
+version = "0.1.0"
+description = "Interactive vector field plotter for 2D and 3D fields"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "plotly>=5.0.0",
+    "numpy>=1.20.0",
+]
+
+[project.scripts]
+field = "omnifield:main"

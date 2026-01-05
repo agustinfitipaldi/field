@@ -76,7 +76,7 @@ def plot_vector_field_2d(u_expr, v_expr, bounds=(-3, 3), points=20, scale=0.1, a
 
     fig.show()
 
-if __name__ == "__main__":
+def main():
     print("Vector Field Plotter")
     print("=" * 40)
 
@@ -125,3 +125,6 @@ if __name__ == "__main__":
             plot_vector_field_3d(u_expr, v_expr, w_expr)
         else:
             plot_vector_field_2d(u_expr, v_expr)
+
+if __name__ == "__main__":
+    main()
