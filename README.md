@@ -1,4 +1,4 @@
-# vectorfield
+# field
 
 Interactive 2D and 3D vector field plotter using Plotly.
 
